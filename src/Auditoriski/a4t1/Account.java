@@ -38,6 +38,7 @@ class NonInterestCheckingAccount extends Account{
     }
 }
 
+
 public abstract class Account {
     private String ownerName;
     private int id;
