@@ -22,64 +22,64 @@ class RomanConverter {
     /**
      * Roman to decimal converter
      *
-     * @param n number in decimal format
+     * @param num number in decimal format
      * @return string representation of the number in Roman numeral
      */
-    public static String toRoman(int n) {
+    public static String toRoman(int num) {
         // your solution here
         StringBuilder sb = new StringBuilder();
-        while(n>0){
-            if(n-1000>=0){
+        while(num>0){
+            if(num-1000>=0){
                 sb.append("M");
-                n=n-1000;
+                num=num-1000;
             }
-            else if(n-900>=0){
+            else if(num-900>=0){
                 sb.append("CM");
-                n=n-900;
+                num=num-900;
             }
-            else if(n-500>=0){
+            else if(num-500>=0){
                 sb.append("D");
-                n=n-500;
+                num=num-500;
             }
-            else if(n-400>=0){
+            else if(num-400>=0){
                 sb.append("CD");
-                n=n-400;
+                num=num-400;
             }
-            else if(n-100>=0){
+            else if(num-100>=0){
                 sb.append("C");
-                n=n-100;
+                num=num-100;
             }
-            else if(n-90>=0){
+            else if(num-90>=0){
                 sb.append("XC");
-                n=n-90;
+                num=num-90;
             }
-            else if(n-50>=0){
+            else if(num-50>=0){
                 sb.append("L");
-                n=n-50;
+                num=num-50;
             }
-            else if(n-40>=0){
+            else if(num-40>=0){
                 sb.append("XL");
-                n=n-40;
+                num=num-40;
             }
-            else if(n-10>=0){
+            else if(num-10>=0){
                 sb.append("X");
-                n=n-10;
+                num=num-10;
             }
-            else if(n-9>=0){
+            else if(num-9>=0){
                 sb.append("IX");
-                n=n-9;
+                num=num-9;
             }
-            else if(n-5>=0){
+            else if(num-5>=0){
                 sb.append("V");
-                n=n-5;
+                num=num-5;
             }
-            else if(n-4>=0){
+            else if(num-4>=0){
                 sb.append("IV");
-                n=n-4;
+                num=num-4;
             }
-            else if(n-1>=0){
+            else if(num-1>=0){
                 sb.append("I");
-                n=n-1;
+                num=num-1;
             }
         }
         return sb.toString();
