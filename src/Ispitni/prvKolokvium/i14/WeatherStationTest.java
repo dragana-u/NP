@@ -121,7 +121,7 @@ class Measurments implements Comparable<Measurments>{
 
     @Override
     public int compareTo(Measurments o) {
-        long t1 = ldt.getSecond(); //1h 5m 30s //1h  3m 0s
+        long t1 = ldt.getSecond();
         long t2 = o.ldt.getSecond();
         long tt = ldt.getMinute();
         long tt2 = o.ldt.getMinute();
