@@ -1,4 +1,4 @@
-package LeetCodeProblems.DayOfTheWeek;
+package Ispitni.LeetCodeProblems.DayOfTheWeek;
 
 import java.time.LocalDate;
 
