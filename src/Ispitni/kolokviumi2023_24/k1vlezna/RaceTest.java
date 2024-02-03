@@ -1,4 +1,4 @@
-package Ispitni.kolokviumi2024.k1vlezna;
+package Ispitni.kolokviumi2023_24.k1vlezna;
 
 import java.io.*;
 import java.time.Duration;

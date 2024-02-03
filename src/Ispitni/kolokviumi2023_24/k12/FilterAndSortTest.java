@@ -1,4 +1,4 @@
-package Ispitni.kolokviumi2024.k12;
+package Ispitni.kolokviumi2023_24.k12;
 
 import java.util.*;
 import java.util.function.Predicate;
