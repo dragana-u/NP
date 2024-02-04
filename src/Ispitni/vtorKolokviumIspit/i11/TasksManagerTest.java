@@ -154,3 +154,208 @@ public class TasksManagerTest {
     }
 }
 
+//import java.io.*;
+//        import java.time.LocalDateTime;
+//import java.util.*;
+//        import java.util.stream.Collectors;
+//
+//interface ITask{
+//    LocalDateTime getDeadline();
+//    int getPriority();
+//    String getCategory();
+//}
+//class DeadlineNotValidException extends Exception{
+//    public DeadlineNotValidException(String message) {
+//        super(message);
+//    }
+//}
+//class SimpleTask implements ITask {
+//    String category;
+//    String name;
+//    String description;
+//
+//    public SimpleTask(String category, String name, String description) {
+//        this.category = category;
+//        this.name = name;
+//        this.description = description;
+//    }
+//
+//    @Override
+//    public LocalDateTime getDeadline() {
+//        return LocalDateTime.MAX;
+//    }
+//
+//    @Override
+//    public int getPriority() {
+//        return Integer.MAX_VALUE;
+//    }
+//
+//    @Override
+//    public String getCategory() {
+//        return category;
+//    }
+//    @Override
+//    public String toString() {
+//        final StringBuilder sb = new StringBuilder("Task{");
+//        sb.append("name='").append(name).append('\'');
+//        sb.append(", description='").append(description).append('\'');
+//        sb.append('}');
+//        return sb.toString();
+//    }
+//}
+//abstract class TaskDecorator implements ITask {
+//    ITask iTask;
+//    public TaskDecorator(ITask iTask) {
+//        this.iTask = iTask;
+//    }
+//}
+//class PriorityTaskDecorator extends TaskDecorator {
+//    int priority;
+//
+//    public PriorityTaskDecorator(ITask iTask, int priority) {
+//        super(iTask);
+//        this.priority = priority;
+//    }
+//
+//    @Override
+//    public LocalDateTime getDeadline() {
+//        return iTask.getDeadline();
+//    }
+//
+//    @Override
+//    public int getPriority() {
+//        return priority;
+//    }
+//
+//    @Override
+//    public String getCategory() {
+//        return iTask.getCategory();
+//    }
+//    @Override
+//    public String toString() {
+//        StringBuilder sb = new StringBuilder();
+//        sb.append(iTask.toString(), 0, iTask.toString().length()-1);
+//        sb.append(", priority=").append(priority);
+//        sb.append('}');
+//        return sb.toString();
+//    }
+//}
+//class TimeTaskDecorator extends TaskDecorator {
+//    LocalDateTime deadline;
+//    public TimeTaskDecorator(ITask iTask, LocalDateTime deadline) {
+//        super(iTask);
+//        this.deadline = deadline;
+//    }
+//
+//    @Override
+//    public LocalDateTime getDeadline() {
+//        return deadline;
+//    }
+//
+//    @Override
+//    public int getPriority() {
+//        return iTask.getPriority();
+//    }
+//
+//    @Override
+//    public String getCategory() {
+//        return iTask.getCategory();
+//    }
+//    @Override
+//    public String toString() {
+//        StringBuilder sb = new StringBuilder();
+//        sb.append(iTask.toString(), 0, iTask.toString().length()-1);
+//        sb.append(", deadline=").append(deadline);
+//        sb.append('}');
+//        return sb.toString();
+//    }
+//}
+//class TaskFactory{
+//    static ITask createTask(String line) throws DeadlineNotValidException {
+//        //[категорија],[име_на_задача],[oпис],[рок_за_задачата],[приоритет]
+//        String[] byComma = line.split(",");
+//        String category = byComma[0];
+//        String name = byComma[1];
+//        String description = byComma[2];
+//        SimpleTask simpleTask = new SimpleTask(category, name, description);
+//        if(byComma.length==3){
+//            return simpleTask;
+//        }else if(byComma.length==5){
+//            LocalDateTime ld = LocalDateTime.parse(byComma[3]);
+//            if (ld.isBefore(LocalDateTime.parse("2020-06-02T00:00:00"))) {
+//                throw new DeadlineNotValidException(String.format("The deadline %s has already passed", ld));
+//            }
+//            return new PriorityTaskDecorator(new TimeTaskDecorator(simpleTask,ld),Integer.parseInt(byComma[4]));
+//        }else if(byComma[3].length()>15){
+//            LocalDateTime ld = LocalDateTime.parse(byComma[3]);
+//            if (ld.isBefore(LocalDateTime.parse("2020-06-02T00:00:00"))) {
+//                throw new DeadlineNotValidException(String.format("The deadline %s has already passed", ld));
+//            }
+//            return new TimeTaskDecorator(simpleTask,ld);
+//        }else{
+//            return new PriorityTaskDecorator(simpleTask,Integer.parseInt(byComma[3]));
+//        }
+//    }
+//}
+//
+//class Task{
+//
+//}
+//
+//class TaskManager{
+//    Map<String, List<ITask>> tasks = new TreeMap<>();
+//    void readTasks (InputStream inputStream){
+//        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+//        tasks = br.lines().map(line -> {
+//            try {
+//                return TaskFactory.createTask(line);
+//            } catch (DeadlineNotValidException e) {
+//                System.out.println(e.getMessage());
+//            }
+//            return null;
+//        }).filter(Objects::nonNull).collect(Collectors.groupingBy(ITask::getCategory,TreeMap::new,Collectors.toList()));
+//    }
+//    void printTasks(OutputStream os, boolean includePriority, boolean includeCategory){
+//        PrintWriter pw = new PrintWriter(os);
+//        Comparator<ITask> priorityComparator = Comparator.comparing(ITask::getPriority).thenComparing(ITask::getDeadline);
+//        Comparator<ITask> withoutPriorityComparator = Comparator.comparing(ITask::getDeadline);
+//        Comparator<ITask> comparatorUsed;
+//        if(includePriority){
+//            comparatorUsed = priorityComparator;
+//        }else{
+//            comparatorUsed = withoutPriorityComparator;
+//        }
+//        if(includeCategory){
+//            tasks.forEach( (c,t) -> {
+//                pw.println(c.toUpperCase());
+//                t.stream().sorted(comparatorUsed).forEach(pw::println);
+//            });
+//        }else{
+//            tasks.values().stream().flatMap(Collection::stream).sorted(comparatorUsed).forEach(pw::println);
+//        }
+//        pw.flush();
+//    }
+//}
+//public class TasksManagerTest {
+//
+//    public static void main(String[] args) {
+//
+//        TaskManager manager = new TaskManager();
+//
+//        System.out.println("Tasks reading");
+//        manager.readTasks(System.in);
+//        System.out.println("By categories with priority");
+//        manager.printTasks(System.out, true, true);
+//        System.out.println("-------------------------");
+//        System.out.println("By categories without priority");
+//        manager.printTasks(System.out, false, true);
+//        System.out.println("-------------------------");
+//        System.out.println("All tasks without priority");
+//        manager.printTasks(System.out, false, false);
+//        System.out.println("-------------------------");
+//        System.out.println("All tasks with priority");
+//        manager.printTasks(System.out, true, false);
+//        System.out.println("-------------------------");
+//
+//    }
+//}
